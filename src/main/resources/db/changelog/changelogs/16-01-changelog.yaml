@@ -1,0 +1,193 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1705418781935-1
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_conge
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: type
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+              - column:
+                  name: date_debut
+                  type: VARCHAR(255)
+              - column:
+                  name: date_fin
+                  type: VARCHAR(255)
+              - column:
+                  name: type_conge
+                  type: SMALLINT
+            tableName: conge
+  - changeSet:
+      id: 1705418781935-2
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_departement
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: nom
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+            tableName: departement
+  - changeSet:
+      id: 1705418781935-3
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_employee
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: nom
+                  type: VARCHAR(255)
+              - column:
+                  name: prenom
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+              - column:
+                  name: telephone
+                  type: VARCHAR(255)
+              - column:
+                  name: date_naissance
+                  type: VARCHAR(255)
+              - column:
+                  name: date_embauche
+                  type: VARCHAR(255)
+              - column:
+                  name: date_depart
+                  type: VARCHAR(255)
+              - column:
+                  name: poste
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: salaire
+                  type: INT
+              - column:
+                  name: departement
+                  type: VARCHAR(255)
+              - column:
+                  name: role
+                  type: VARCHAR(255)
+              - column:
+                  name: formation_id
+                  type: BIGINT
+              - column:
+                  name: conge_id
+                  type: BIGINT
+            tableName: employee
+  - changeSet:
+      id: 1705418781935-4
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_formation
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: titre
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+              - column:
+                  name: date_debut
+                  type: VARCHAR(255)
+              - column:
+                  name: date_fin
+                  type: VARCHAR(255)
+              - column:
+                  name: lieu
+                  type: VARCHAR(255)
+              - column:
+                  name: cours
+                  type: VARCHAR(255)
+            tableName: formation
+  - changeSet:
+      id: 1705418781935-5
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_poste
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: nom
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: VARCHAR(255)
+            tableName: poste
+  - changeSet:
+      id: 1705418781935-6
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: conge_id
+            baseTableName: employee
+            constraintName: FK_EMPLOYEE_ON_CONGE
+            referencedColumnNames: id
+            referencedTableName: conge
+  - changeSet:
+      id: 1705418781935-7
+      author: Youcode (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: formation_id
+            baseTableName: employee
+            constraintName: FK_EMPLOYEE_ON_FORMATION
+            referencedColumnNames: id
+            referencedTableName: formation
+
