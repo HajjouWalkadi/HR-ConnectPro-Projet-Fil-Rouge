@@ -1,2 +1,4 @@
-package com.example.hrconnectpro.service;public interface CongeService {
+package com.example.hrconnectpro.service;
+
+public interface CongeService {
 }
