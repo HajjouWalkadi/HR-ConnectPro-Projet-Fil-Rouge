@@ -1,4 +1,4 @@
-package com.example.s3cur1ty.config;
+package com.example.hrconnectpro.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

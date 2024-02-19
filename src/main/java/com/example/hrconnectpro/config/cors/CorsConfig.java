@@ -1,4 +1,4 @@
-package com.example.aftas.config.cors;
+package com.example.hrconnectpro.config.cors;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
