@@ -1,4 +1,4 @@
-package com.example.aftas.config.handlers.exception;
+package com.example.hrconnectpro.config.handlers.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
