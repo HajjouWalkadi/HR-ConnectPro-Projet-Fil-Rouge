@@ -1,5 +1,6 @@
-package com.example.s3cur1ty.config;
+package com.example.hrconnectpro.config;
 
+import com.example.hrconnectpro.security.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
