@@ -1,6 +1,6 @@
-package com.example.aftas.config.handlers.exception;
+package com.example.hrconnectpro.config.handlers.exception;
 
-import com.example.aftas.config.handlers.response.ResponseMessage;
+import com.example.hrconnectpro.config.handlers.response.ResponseMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
