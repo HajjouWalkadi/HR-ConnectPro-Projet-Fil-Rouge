@@ -1,4 +1,4 @@
-package com.example.aftas.config.handlers.response;
+package com.example.hrconnectpro.config.handlers.response;
 
 
 import lombok.Getter;
