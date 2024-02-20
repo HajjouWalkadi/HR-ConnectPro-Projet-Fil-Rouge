@@ -1,14 +1,14 @@
-package com.rh.service;
+package com.example.hrconnectpro.service.impl;
+
+import com.example.hrconnectpro.entities.Absense;
+import com.example.hrconnectpro.entities.Employee;
+import com.example.hrconnectpro.repository.AbsenseRepository;
+import com.example.hrconnectpro.service.AbsenseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
-import com.rh.entity.Employee;
-import com.rh.entity.Absense;
-import com.rh.repository.AbsenseRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class AbsenseServiceImpl implements AbsenseService {

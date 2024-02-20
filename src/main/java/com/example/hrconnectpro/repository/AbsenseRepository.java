@@ -1,8 +1,7 @@
-package com.rh.repository;
+package com.example.hrconnectpro.repository;
 
-import com.rh.entity.Absense;
-import com.rh.entity.Employee;
-
+import com.example.hrconnectpro.entities.Absense;
+import com.example.hrconnectpro.entities.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

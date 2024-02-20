@@ -1,10 +1,9 @@
-package com.rh.controller;
+package com.example.hrconnectpro.controller;
 
-import com.rh.entity.Employee;
-import com.rh.entity.Absense;
-import com.rh.service.AbsenseService;
-import com.rh.service.EmployeeService;
-
+import com.example.hrconnectpro.entities.Absense;
+import com.example.hrconnectpro.entities.Employee;
+import com.example.hrconnectpro.service.AbsenseService;
+import com.example.hrconnectpro.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

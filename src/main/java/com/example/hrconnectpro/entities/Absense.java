@@ -1,20 +1,23 @@
-package com.rh.entity;
+package com.example.hrconnectpro.entities;
 
-import javax.persistence.*;
-
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
-
-import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @DynamicUpdate
+
 public class Absense {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
+
+  @ManyToOne
+  private Employee employee;
 
   public long getId() {
     return this.id;
@@ -23,9 +26,6 @@ public class Absense {
   public void setId(long id) {
     this.id = id;
   }
-
-  @ManyToOne
-  private Employee employee;
 
   public Employee getEmployee() {
     return this.employee;

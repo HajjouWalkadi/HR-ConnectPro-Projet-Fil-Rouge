@@ -1,9 +1,10 @@
-package com.rh.service;
+package com.example.hrconnectpro.service;
+
+
+import com.example.hrconnectpro.entities.Absense;
+import com.example.hrconnectpro.entities.Employee;
 
 import java.util.List;
-
-import com.rh.entity.Employee;
-import com.rh.entity.Absense;
 
 public interface AbsenseService {
     List<Absense> getAllAbsenses();
