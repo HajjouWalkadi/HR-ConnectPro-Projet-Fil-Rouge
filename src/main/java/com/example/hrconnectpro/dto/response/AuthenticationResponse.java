@@ -1,6 +1,6 @@
-package com.example.aftas.dto.response;
+package com.example.hrconnectpro.dto.response;
 
-import com.example.aftas.model.Role;
+import com.example.hrconnectpro.entities.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
