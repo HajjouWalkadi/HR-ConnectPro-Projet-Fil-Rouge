@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -19,19 +20,16 @@ public class Conge {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
-    private String type;
+    private String name;
     private String description;
-    private String dateDebut;
-    private String dateFin;
+    private LocalDate dateDebut;
+    private LocalDate dateFin;
+    @Enumerated(EnumType.STRING)
     private TypeConge typeConge;
 
-    /*@ManyToOne
-    @JoinColumn(name = "employee_id")
-    private Employee employee;*/
 
-    @OneToMany(mappedBy = "conge")
-    private List<Employee> employee;
+    @ManyToOne
+    private Employee employee;
 
 
 
