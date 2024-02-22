@@ -1,15 +1,15 @@
-package com.example.aftas.service.impl;
+package com.example.hrconnectpro.service.impl;
 
-import com.example.aftas.dto.request.AuthenticationRequest;
-import com.example.aftas.dto.request.RefreshTokenRequestDTO;
-import com.example.aftas.dto.request.RegisterRequest;
-import com.example.aftas.dto.response.AuthenticationResponse;
-import com.example.aftas.dto.response.RefreshTokenResponseDTO;
-import com.example.aftas.model.Member;
-import com.example.aftas.repository.MemberRepository;
-import com.example.aftas.security.JwtService;
-import com.example.aftas.service.AuthenticationService;
-import com.example.aftas.service.RoleService;
+import com.example.hrconnectpro.dto.request.AuthenticationRequest;
+import com.example.hrconnectpro.dto.request.RefreshTokenRequestDTO;
+import com.example.hrconnectpro.dto.request.RegisterRequest;
+import com.example.hrconnectpro.dto.response.AuthenticationResponse;
+import com.example.hrconnectpro.dto.response.RefreshTokenResponseDTO;
+import com.example.hrconnectpro.entities.Employee;
+import com.example.hrconnectpro.repository.EmployeeRepository;
+import com.example.hrconnectpro.security.JwtService;
+import com.example.hrconnectpro.service.AuthenticationService;
+import com.example.hrconnectpro.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,7 +24,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    private final MemberRepository userRepository;
+    private final EmployeeRepository employeeRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -34,40 +34,31 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
         // Check if email already exists
-        if (userRepository.existsByEmail(request.getEmail())) {
+        if (employeeRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already exists. Please choose a different email.");
         }
 
-        // Generate a random membership number and check for uniqueness
-        int randomMembershipNumber;
-        do {
-            randomMembershipNumber = generateRandomMembershipNumber();
-        } while (userRepository.existsByMembershipNumber(randomMembershipNumber));
 
-        LocalDate accessDate = java.time.LocalDate.now();
+        LocalDate accessDate = LocalDate.now();
 
-        var user = Member.builder()
-                .name(request.getName())
-                .familyName(request.getFamilyName())
-                .nationality(request.getNationality())
-                .identityDocumentType(request.getIdentityDocumentType())
-                .identityNumber(request.getIdentityNumber())
+        var user = Employee.builder()
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(roleService.findDefaultRole().orElse(null))
-                .membershipNumber(randomMembershipNumber)
-                .accessDate(accessDate)
                 .build();
 
-        userRepository.save(user);
+        employeeRepository.save(user);
 
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .email(user.getEmail())
                 .role(user.getRole())
-                .name(user.getName())
-                .familyName(user.getFamilyName())
+                .name(user.getFirstName())
+                .familyName(user.getLastName())
                 .build();
     }
 
@@ -77,7 +68,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
 
-        var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        var user = employeeRepository.findByEmail(request.getEmail()).orElseThrow();
 
         // Generate access token and refresh token
         var accessToken = jwtService.generateToken(user);
@@ -87,15 +78,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setRefreshToken(refreshToken);
 
         // Save the updated Member entity
-        userRepository.save(user);
+        employeeRepository.save(user);
 
         return AuthenticationResponse.builder()
                 .token(accessToken)
                 .refreshToken(refreshToken)
                 .email(user.getEmail())
                 .role(user.getRole())
-                .name(user.getName())
-                .familyName(user.getFamilyName())
+                .name(user.getFirstName())
+                .familyName(user.getLastName())
                 .build();
     }
 
@@ -115,10 +106,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String username = jwtService.extractUserName(refreshToken);
 
         // Find the user by username
-        Member user = userRepository.findByEmail(username).orElseThrow(() -> new RuntimeException("User not found"));
+        Employee employee = employeeRepository.findByEmail(username).orElseThrow(() -> new RuntimeException("User not found"));
 
         // Verify if the stored refresh token matches the provided one
-        if (!Objects.equals(user.getRefreshToken(), refreshToken)) {
+        if (!Objects.equals(employee.getRefreshToken(), refreshToken)) {
             throw new RuntimeException("Invalid refresh token");
         }
 
@@ -128,14 +119,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
 
         // Generate a new access token
-        String newAccessToken = jwtService.generateToken(user);
+        String newAccessToken = jwtService.generateToken(employee);
 
         // Expire the old refresh token and generate a new one
-        String newRefreshToken = jwtService.generateRefreshToken(user);
+        String newRefreshToken = jwtService.generateRefreshToken(employee);
 
         // Update the refresh token in the Member entity
-        user.setRefreshToken(newRefreshToken);
-        userRepository.save(user);
+        employee.setRefreshToken(newRefreshToken);
+        employeeRepository.save(employee);
 
         // Create and return the response DTO
         return RefreshTokenResponseDTO.builder()

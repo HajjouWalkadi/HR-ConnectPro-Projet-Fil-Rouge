@@ -1,12 +1,11 @@
-package com.example.aftas.service;
+package com.example.hrconnectpro.service;
 
-import com.example.aftas.dto.request.AuthenticationRequest;
-import com.example.aftas.dto.request.RefreshTokenRequestDTO;
-import com.example.aftas.dto.request.RegisterRequest;
-import com.example.aftas.dto.response.AuthenticationResponse;
-import com.example.aftas.dto.response.RefreshTokenResponseDTO;
-import org.springframework.stereotype.Component;
 
+import com.example.hrconnectpro.dto.request.AuthenticationRequest;
+import com.example.hrconnectpro.dto.request.RefreshTokenRequestDTO;
+import com.example.hrconnectpro.dto.request.RegisterRequest;
+import com.example.hrconnectpro.dto.response.AuthenticationResponse;
+import com.example.hrconnectpro.dto.response.RefreshTokenResponseDTO;
 
 public interface AuthenticationService {
 
