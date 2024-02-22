@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,5 +21,8 @@ public class Departement {
 
     private String nom;
     private String description;
+
+    @OneToMany(mappedBy = "departement")
+    private List<Employee> employees;
 
 }
