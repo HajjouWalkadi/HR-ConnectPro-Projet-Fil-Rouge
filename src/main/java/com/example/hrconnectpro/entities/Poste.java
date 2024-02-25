@@ -20,7 +20,7 @@ public class Poste {
     private Long id;
 
     private String nom;
-    private String description;
+    //private String description;
 
     @OneToMany(mappedBy = "poste")
     private List<Employee> employee;
