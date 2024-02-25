@@ -1,7 +1,7 @@
-package com.example.aftas.service;
+package com.example.hrconnectpro.service;
 
-import com.example.aftas.model.Role;
-import org.springframework.stereotype.Component;
+
+import com.example.hrconnectpro.entities.Role;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +12,7 @@ public interface RoleService {
 
     Optional<Role> findDefaultRole();
 
-    Role update(Role role, Long id);
+    //Role update(Role role, Long id);
 
     Optional<Role> getById(Long id);
 
@@ -22,8 +22,5 @@ public interface RoleService {
 
     List<Role> getAll();
 
-    Role grantAuthorities(Long authorityId, Long roleId);
-
-    Role revokeAuthorities(Long authorityId, Long roleId);
 
 }
