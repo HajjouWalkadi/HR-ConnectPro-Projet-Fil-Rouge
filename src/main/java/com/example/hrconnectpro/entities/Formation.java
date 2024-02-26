@@ -26,6 +26,6 @@ public class Formation {
     private String lieu;
     private String cours;
 
-    @OneToMany(mappedBy = "formation")
-    private List<Employee> employee;
+    @ManyToMany(mappedBy = "formations")
+    private List<Employee> employees;
 }
