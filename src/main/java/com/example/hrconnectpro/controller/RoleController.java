@@ -1,12 +1,10 @@
-package com.example.aftas.controller;
+package com.example.hrconnectpro.controller;
 
-import com.example.aftas.dto.request.GrantAuthoritiesRequestDto;
-import com.example.aftas.dto.request.GrantRoleToUserRequestDto;
-import com.example.aftas.dto.request.RoleRequestDTO;
-import com.example.aftas.dto.response.RoleResponseDTO;
-import com.example.aftas.model.Role;
-import com.example.aftas.service.MemberService;
-import com.example.aftas.service.RoleService;
+import com.example.hrconnectpro.dto.request.RoleRequestDTO;
+import com.example.hrconnectpro.dto.response.RoleResponseDTO;
+import com.example.hrconnectpro.entities.Role;
+import com.example.hrconnectpro.service.EmployeeService;
+import com.example.hrconnectpro.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +18,7 @@ import java.util.List;
 public class RoleController {
 
     private final RoleService roleService;
-    private final MemberService userService;
+    private final EmployeeService userService;
 
     @GetMapping
     public ResponseEntity<List<RoleResponseDTO>> getAll() {
@@ -36,32 +34,6 @@ public class RoleController {
         else return new ResponseEntity<>(RoleResponseDTO.fromRole(role), HttpStatus.OK);
     }
 
-    @PutMapping("/grant_authorities")
-    public ResponseEntity<RoleResponseDTO> grantAuthorities(@RequestBody GrantAuthoritiesRequestDto rolesAuthorities) {
-        Role role = roleService.grantAuthorities(rolesAuthorities.getAuthorityId(), rolesAuthorities.getRoleId());
-        if (role == null) {
-             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else return new ResponseEntity<>(RoleResponseDTO.fromRole(role), HttpStatus.OK);
-    }
-
-    @PutMapping("/revoke_authorities")
-    public ResponseEntity<RoleResponseDTO> revokeAuthorities(@RequestBody GrantAuthoritiesRequestDto rolesAuthorities) {
-        Role role = roleService.revokeAuthorities(rolesAuthorities.getAuthorityId(), rolesAuthorities.getRoleId());
-        if (role == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else return new ResponseEntity<>(RoleResponseDTO.fromRole(role), HttpStatus.OK);
-    }
-
-    //grant role to user
-    @PostMapping("/grant_role_to_user")
-    public ResponseEntity<RoleResponseDTO> grantRoleToUser(@RequestBody GrantRoleToUserRequestDto grantRoleToUserRequestDto) {
-        Role role = userService.grantRoleToUser(grantRoleToUserRequestDto.getUserId(), grantRoleToUserRequestDto.getRoleId());
-
-        if (role == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(RoleResponseDTO.fromRole(role), HttpStatus.OK);
-        }
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
