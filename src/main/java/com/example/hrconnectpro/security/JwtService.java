@@ -1,4 +1,4 @@
-package com.example.aftas.security;
+package com.example.hrconnectpro.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -73,6 +73,7 @@ public class JwtService {
     //generate key
     private Key getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
