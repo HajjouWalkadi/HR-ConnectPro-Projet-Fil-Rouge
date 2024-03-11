@@ -2,8 +2,10 @@ package com.example.hrconnectpro.service.impl;
 
 import com.example.hrconnectpro.config.handlers.exception.ResourceNotFoundException;
 import com.example.hrconnectpro.entities.Conge;
+import com.example.hrconnectpro.entities.Employee;
 import com.example.hrconnectpro.repository.CongeRepository;
 import com.example.hrconnectpro.service.CongeService;
+import com.example.hrconnectpro.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +16,21 @@ import java.util.List;
 public class CongeServiceImpl implements CongeService {
 
 private final CongeRepository congeRepository;
+private final EmployeeService employeeService;
 
     @Override
     public Conge saveConge(Conge conge) {
-        if (congeRepository.findByName(conge.getName()) != null) {
-            throw new ResourceNotFoundException("Conge name " + conge.getName() + " already exists");
+//        if (congeRepository.findByName(conge.getName()) != null) {
+//            throw new ResourceNotFoundException("Conge name " + conge.getName() + " already exists");
+//        }
+
+        Employee employee = employeeService.getEmployeeById(conge.getEmployee().getId());
+
+        if (employee == null) {
+            throw new ResourceNotFoundException("Employee not found");
         }
+        conge.setEmployee(employee);
+
         return congeRepository.save(conge);
     }
 
