@@ -30,7 +30,7 @@ public class CongeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getCongeById(Long id) {
+    public ResponseEntity getCongeById(@PathVariable Long id) {
         Conge conge = congeService.findCongeById(id);
         if(conge == null) {
             return ResponseMessage.notFound("Congé not found");
