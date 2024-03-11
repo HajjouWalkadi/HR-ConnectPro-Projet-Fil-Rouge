@@ -20,7 +20,7 @@ public class DepartementServiceImpl implements DepartementService {
 
     @Override
     public Departement addDepartement(Departement departement) {
-        if (departementRepository.findByName(departement.getNom()) != null) {
+        if (departementRepository.findByNom(departement.getNom()) != null) {
             throw new ResourceNotFoundException("Departement name " + departement.getNom() + " already exists");
         }
         return departementRepository.save(departement);
