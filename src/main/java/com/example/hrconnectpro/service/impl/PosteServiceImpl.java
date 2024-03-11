@@ -21,7 +21,7 @@ public class PosteServiceImpl implements PosteService {
 
     @Override
     public Poste addPoste(Poste poste) {
-        if (posteRepository.findByName(poste.getNom()) != null) {
+        if (posteRepository.findByNom(poste.getNom()) != null) {
             throw new ResourceNotFoundException("Conge name " + poste.getNom() + " already exists");
         }
         return posteRepository.save(poste);
