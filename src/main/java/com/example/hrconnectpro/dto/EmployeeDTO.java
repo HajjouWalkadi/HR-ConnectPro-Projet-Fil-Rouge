@@ -16,12 +16,9 @@ public record EmployeeDTO(
         Date dateNaissance,
         Date dateEmbauche,
         Date dateDepart,
-        String poste,
-        int salaire,
-        String departement,
-        String role,
-        Long formationId,
-        Long congeId
+        String designationNom,
+        String departmentNom,
+        String role
 ) {
     public Employee toEmployee() {
         return Employee.builder()
@@ -35,17 +32,35 @@ public record EmployeeDTO(
                 .dateDepart(dateDepart)
                 .poste(
                         Poste.builder()
-                                .nom(poste)
+                                .nom(designationNom)
                                 .build()
                 )
-                .salaire(salaire)
                 .departement(
                         Departement.builder()
-                                .nom(departement)
+                                .nom(departmentNom)
                                 .build()
                 )
                 .role(Role.builder().build())
                 .build();
 
+    }
+
+    public static EmployeeDTO toDto(Employee employee) {
+        String departmentNom = employee.getDepartement() == null ? null : employee.getDepartement().getNom();
+        String role = employee.getRole() == null ? null : employee.getRole().getName();
+        String post = employee.getPoste() == null ? null : employee.getPoste().getNom();
+        return new EmployeeDTO(
+                employee.getId(),
+                employee.getLastName(),
+                employee.getFirstName(),
+                employee.getEmail(),
+                employee.getTelephone(),
+                employee.getDateNaissance(),
+                employee.getDateEmbauche(),
+                employee.getDateDepart(),
+                post,
+                departmentNom,
+                role
+        );
     }
 }
