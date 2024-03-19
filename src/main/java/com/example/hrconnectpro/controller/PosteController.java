@@ -5,20 +5,18 @@ import com.example.hrconnectpro.entities.Poste;
 import com.example.hrconnectpro.service.PosteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/poste")
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/v1/poste")
 @RequiredArgsConstructor
 public class PosteController {
     private final PosteService posteService;
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity getAllPostes() {
         List<Poste> postes = posteService.getAllPostes();
         if(postes.isEmpty()) {
@@ -29,7 +27,7 @@ public class PosteController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity addPoste(Poste poste) {
+    public ResponseEntity addPoste(@RequestBody Poste poste) {
         Poste poste1 = posteService.addPoste(poste);
         if(poste1 == null) {
             return ResponseMessage.badRequest("Poste not created");
@@ -39,7 +37,7 @@ public class PosteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getPosteById(Long id) {
+    public ResponseEntity getPosteById(@PathVariable Long id) {
         return ResponseMessage.ok( posteService.getPosteById(id), "Success");
     }
 }

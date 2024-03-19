@@ -5,15 +5,13 @@ import com.example.hrconnectpro.entities.Departement;
 import com.example.hrconnectpro.service.DepartementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/departement")
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/v1/departement")
 @RequiredArgsConstructor
 public class DepartementController {
     private final DepartementService departementService;
@@ -34,7 +32,7 @@ public class DepartementController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity addDepartement(Departement departement) {
+    public ResponseEntity addDepartement(@RequestBody Departement departement) {
         Departement departement1 = departementService.addDepartement(departement);
         if (departement1 == null) {
             return ResponseMessage.badRequest("Departement not created");
@@ -42,6 +40,7 @@ public class DepartementController {
             return ResponseMessage.created(departement1, "Departement created successfully");
         }
     }
+
 
 
 

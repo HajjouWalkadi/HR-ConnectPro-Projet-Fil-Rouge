@@ -2,17 +2,21 @@ package com.example.hrconnectpro.controller;
 
 import com.example.hrconnectpro.config.handlers.response.ResponseMessage;
 import com.example.hrconnectpro.dto.CongeDTO;
+import com.example.hrconnectpro.dto.response.CongeResponseDto;
 import com.example.hrconnectpro.entities.Conge;
+import com.example.hrconnectpro.enums.StatusConge;
 import com.example.hrconnectpro.service.CongeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/conge")
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/v1/conge")
 @RequiredArgsConstructor
 
 public class CongeController {
@@ -22,9 +26,14 @@ public class CongeController {
     public ResponseEntity getAllConge() {
         List<Conge> conges = congeService.getAllConges();
         if (conges.isEmpty()) {
-            return ResponseMessage.notFound("Fish not found");
+            return ResponseMessage.notFound("Conge not found");
         }else {
-            return ResponseMessage.ok(conges,"Success");
+            return ResponseMessage.ok(
+                    conges.stream()
+                            .map(CongeResponseDto::toDto)
+                            .toList(),
+                    "Success"
+            );
         }
 
     }
@@ -71,6 +80,11 @@ public class CongeController {
         }else {
             return ResponseMessage.created(conge,"Congé deleted successfully");
         }
+    }
+    @PutMapping("/change-status/{id}")
+    public ResponseEntity changeStatus(@PathVariable Long id, @RequestParam StatusConge status) {
+        Conge conge = congeService.updateStatus(id, status);
+        return ResponseMessage.created(conge,"Status changed successfully");
     }
 
 }

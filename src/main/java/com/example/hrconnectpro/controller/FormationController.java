@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/formations")
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/v1/formations")
 @RequiredArgsConstructor
 public class FormationController {
     private final FormationService formationService;
@@ -25,7 +26,7 @@ public class FormationController {
         }
     }
     @PostMapping("/add")
-    public ResponseEntity saveFormation(Formation formation) {
+    public ResponseEntity saveFormation(@RequestBody Formation formation) {
         Formation formation1 = formationService.saveFormation(formation);
         if(formation1 == null) {
             return ResponseMessage.badRequest("Formation not created");
