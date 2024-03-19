@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -21,11 +22,9 @@ public class Formation {
 
     private String titre;
     private String description;
-    private String dateDebut;
-    private String dateFin;
-    private String lieu;
-    private String cours;
+    private LocalDate dateDebut;
+    private LocalDate dateFin;
 
-    @ManyToMany(mappedBy = "formations")
+    @ManyToMany(mappedBy = "formations", fetch = FetchType.LAZY)
     private List<Employee> employees;
 }

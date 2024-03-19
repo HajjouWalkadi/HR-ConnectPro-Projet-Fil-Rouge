@@ -1,5 +1,6 @@
 package com.example.hrconnectpro.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,8 @@ public class Departement {
     private String description;
 
     @OneToMany(mappedBy = "departement")
+    @JsonIgnore
     private List<Employee> employees;
 
 }
+

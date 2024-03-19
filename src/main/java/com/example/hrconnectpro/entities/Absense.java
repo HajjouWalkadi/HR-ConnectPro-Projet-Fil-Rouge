@@ -47,3 +47,7 @@ public class Absense {
   }
 
 }
+// give the form of the entity Absence to test it postman format json
+// {
+//     "date": "2021-09-01"
+// }

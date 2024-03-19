@@ -1,2 +1,7 @@
-package com.example.hrconnectpro.enums;public enum StatusConge {
+package com.example.hrconnectpro.enums;
+
+public enum StatusConge {
+    APPROVED,
+    PENDING,
+    DECLINED
 }

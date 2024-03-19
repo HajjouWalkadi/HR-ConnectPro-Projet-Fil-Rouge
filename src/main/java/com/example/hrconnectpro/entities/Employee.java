@@ -1,5 +1,7 @@
 package com.example.hrconnectpro.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,19 +28,21 @@ public class Employee implements UserDetails {
     private String lastName;
     private String username;
     private String email;
+    @JsonIgnore
     private String password;
     private String telephone;
     private Date dateNaissance;
     private Date dateEmbauche;
     private Date dateDepart;
-    private int salaire;
 
     @ManyToOne
     private Role role;
 
     private String refreshToken;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "poste_id")
+    @JsonIgnore
     private Poste poste;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -49,6 +53,7 @@ public class Employee implements UserDetails {
 
     @OneToMany(mappedBy = "employee")
     @ToString.Exclude
+    //@JsonBackReference
     private List<Conge> conges;
 
 

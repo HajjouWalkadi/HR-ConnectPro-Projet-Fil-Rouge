@@ -1,7 +1,9 @@
 package com.example.hrconnectpro.entities;
 
+import com.example.hrconnectpro.enums.StatusConge;
 import com.example.hrconnectpro.enums.TypeConge;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,9 +30,12 @@ public class Conge {
     private LocalDate dateFin;
     @Enumerated(EnumType.STRING)
     private TypeConge typeConge;
+    @Enumerated(EnumType.STRING)
+    private StatusConge status;
 
 
     @ManyToOne
+    //@JsonManagedReference
     private Employee employee;
 
 

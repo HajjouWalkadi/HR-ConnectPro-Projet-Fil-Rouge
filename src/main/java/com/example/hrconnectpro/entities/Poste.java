@@ -1,5 +1,7 @@
 package com.example.hrconnectpro.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,9 +22,10 @@ public class Poste {
     private Long id;
 
     private String nom;
-    //private String description;
 
-    @OneToMany(mappedBy = "poste")
+    @OneToMany(mappedBy = "poste", fetch = FetchType.LAZY)
+    @JsonIgnore // Breaks the circular reference
     private List<Employee> employee;
 
 }
+
