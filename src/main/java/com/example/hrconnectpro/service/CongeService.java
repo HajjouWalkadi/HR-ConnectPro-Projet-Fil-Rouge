@@ -1,6 +1,7 @@
 package com.example.hrconnectpro.service;
 
 import com.example.hrconnectpro.entities.Conge;
+import com.example.hrconnectpro.enums.StatusConge;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface CongeService {
     Conge findCongeByEmployeeId(Long id);
 
     void deleteConge(Long id);
+
+    Conge updateStatus(Long id, StatusConge status);
 }

@@ -23,4 +23,5 @@ public interface RoleService {
     List<Role> getAll();
 
 
+    Optional<Role> findByNom(String role);
 }
