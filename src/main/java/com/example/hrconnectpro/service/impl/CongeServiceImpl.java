@@ -3,6 +3,7 @@ package com.example.hrconnectpro.service.impl;
 import com.example.hrconnectpro.config.handlers.exception.ResourceNotFoundException;
 import com.example.hrconnectpro.entities.Conge;
 import com.example.hrconnectpro.entities.Employee;
+import com.example.hrconnectpro.enums.StatusConge;
 import com.example.hrconnectpro.repository.CongeRepository;
 import com.example.hrconnectpro.service.CongeService;
 import com.example.hrconnectpro.service.EmployeeService;
@@ -20,9 +21,6 @@ private final EmployeeService employeeService;
 
     @Override
     public Conge saveConge(Conge conge) {
-//        if (congeRepository.findByName(conge.getName()) != null) {
-//            throw new ResourceNotFoundException("Conge name " + conge.getName() + " already exists");
-//        }
 
         Employee employee = employeeService.getEmployeeById(conge.getEmployee().getId());
 
@@ -64,5 +62,12 @@ private final EmployeeService employeeService;
         findCongeById(id);
         congeRepository.deleteById(id);
 
+    }
+
+    @Override
+    public Conge updateStatus(Long id, StatusConge status) {
+        Conge conge = findCongeById(id);
+        conge.setStatus(status);
+        return congeRepository.save(conge);
     }
 }

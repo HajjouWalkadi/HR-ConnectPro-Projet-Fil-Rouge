@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,8 @@ public class DepartementServiceImpl implements DepartementService {
 
     @Override
     public Departement addDepartement(Departement departement) {
-        if (departementRepository.findByNom(departement.getNom()) != null) {
+        Departement byNom = departementRepository.findByNom(departement.getNom()).orElse(null);
+        if (byNom != null) {
             throw new ResourceNotFoundException("Departement name " + departement.getNom() + " already exists");
         }
         return departementRepository.save(departement);
@@ -29,5 +31,10 @@ public class DepartementServiceImpl implements DepartementService {
     @Override
     public List<Departement> getAllDepartements() {
         return departementRepository.findAll();
+    }
+
+    @Override
+    public Optional<Departement> findByNom(String nom) {
+        return departementRepository.findByNom(nom);
     }
 }

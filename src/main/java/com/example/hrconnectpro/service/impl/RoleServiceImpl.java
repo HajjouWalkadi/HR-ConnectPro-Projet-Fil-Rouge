@@ -33,6 +33,11 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public Optional<Role> findByNom(String role) {
+        return roleRepository.findByName(role);
+    }
+
+    @Override
     public Role save(Role role, boolean isSeed) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
