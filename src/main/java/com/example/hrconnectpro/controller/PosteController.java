@@ -1,6 +1,7 @@
 package com.example.hrconnectpro.controller;
 
 import com.example.hrconnectpro.config.handlers.response.ResponseMessage;
+import com.example.hrconnectpro.entities.Departement;
 import com.example.hrconnectpro.entities.Poste;
 import com.example.hrconnectpro.service.PosteService;
 import lombok.RequiredArgsConstructor;
@@ -39,5 +40,16 @@ public class PosteController {
     @GetMapping("/{id}")
     public ResponseEntity getPosteById(@PathVariable Long id) {
         return ResponseMessage.ok( posteService.getPosteById(id), "Success");
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePoste(@PathVariable Long id) {
+        Poste poste = posteService.getPosteById(id);
+        if (poste == null) {
+            return ResponseEntity.badRequest().body("Failed to delete poste: Poste not found.");
+        } else {
+            posteService.deletePoste(id);
+            return ResponseEntity.ok().body("{\"message\":\"Poste deleted successfully\"}");
+        }
     }
 }

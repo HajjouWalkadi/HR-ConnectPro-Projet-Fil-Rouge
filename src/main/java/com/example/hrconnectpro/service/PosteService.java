@@ -11,4 +11,5 @@ public interface PosteService {
     List<Poste> getAllPostes();
 
     Optional<Poste> findByNom(String nom);
+    void deletePoste(Long id);
 }

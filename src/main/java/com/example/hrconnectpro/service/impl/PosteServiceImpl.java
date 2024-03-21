@@ -38,4 +38,9 @@ public class PosteServiceImpl implements PosteService {
     public Optional<Poste> findByNom(String nom) {
         return posteRepository.findByNom(nom);
     }
+
+    @Override
+    public void deletePoste(Long id) {
+        posteRepository.deleteById(id);
+    }
 }
