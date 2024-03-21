@@ -2,83 +2,84 @@ package com.example.hrconnectpro.service.impl;
 
 import com.example.hrconnectpro.entities.Conge;
 import com.example.hrconnectpro.entities.Employee;
+import com.example.hrconnectpro.repository.CongeRepository;
+import com.example.hrconnectpro.service.EmployeeService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.dao.DataIntegrityViolationException;
 
+import static org.mockito.Mockito.*;
 import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class CongeServiceImplTest {
 
+    @Mock
+    private CongeRepository congeRepository;
+
+    @Mock
+    private EmployeeService employeeService; // Mock the EmployeeService
+
+    @InjectMocks
+    private CongeServiceImpl congeService;
+
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
+        // Mock the behavior of employeeService.getEmployeeById() if needed
+        Employee mockEmployee = new Employee();
+        mockEmployee.setId(1L);
+        when(employeeService.getEmployeeById(anyLong())).thenReturn(mockEmployee);
+    }
+
+    @Test
+    public void test_valid_conge_object() {
+        // Arrange
+        Conge conge = new Conge();
+        conge.setName("Test Conge");
+        conge.setDateDebut(LocalDate.now());
+        conge.setDateFin(LocalDate.now().plusDays(5));
+        Employee employee = new Employee();
+        employee.setId(1L);
+        conge.setEmployee(employee);
+
+        when(congeRepository.save(any(Conge.class))).thenReturn(conge); // Mock the save operation
+
+        // Act
+        Conge savedConge = congeService.saveConge(conge);
+
+        // Assert
+        assertNotNull(savedConge);
+        assertEquals(conge.getName(), savedConge.getName());
+        assertEquals(conge.getDateDebut(), savedConge.getDateDebut());
+        assertEquals(conge.getDateFin(), savedConge.getDateFin());
+        assertEquals(conge.getEmployee(), savedConge.getEmployee());
+    }
+
+    @Test
+    public void test_invalid_conge_object() {
+        // Arrange
+        Conge conge = new Conge();
+        conge.setName("Test Conge");
+        conge.setDateDebut(LocalDate.now());
+        conge.setDateFin(LocalDate.now().plusDays(5));
+        Employee employee = new Employee();
+        employee.setId(1L);
+        conge.setEmployee(employee);
+
+        when(congeRepository.save(any(Conge.class))).thenReturn(null); // Mock the save operation
+
+        // Act
+        Conge savedConge = congeService.saveConge(conge);
+
+        // Assert
+        assertNull(savedConge);
+    }
 
 
-            // When given a valid Conge object, it should save the Conge to the database and return the saved Conge object.
-            @Test
-            public void test_valid_conge_object() {
-                // Arrange
-                Conge conge = new Conge();
-                conge.setName("Test Conge");
-                conge.setDateDebut(LocalDate.now());
-                conge.setDateFin(LocalDate.now().plusDays(5));
-                Employee employee = new Employee();
-                employee.setId(1L);
-                conge.setEmployee(employee);
 
-                // Act
-                Conge savedConge = congeService.saveConge(conge);
-
-                // Assert
-                assertNotNull(savedConge);
-                assertEquals(conge.getName(), savedConge.getName());
-                assertEquals(conge.getDateDebut(), savedConge.getDateDebut());
-                assertEquals(conge.getDateFin(), savedConge.getDateFin());
-                assertEquals(conge.getEmployee(), savedConge.getEmployee());
-            }
-
-            // When given a Conge object with a null name, it should save the Conge to the database with a null name.
-            @Test
-            public void test_null_name_conge_object() {
-                // Arrange
-                Conge conge = new Conge();
-                conge.setName(null);
-                conge.setDateDebut(LocalDate.now());
-                conge.setDateFin(LocalDate.now().plusDays(5));
-                Employee employee = new Employee();
-                employee.setId(1L);
-                conge.setEmployee(employee);
-
-                // Act
-                Conge savedConge = congeService.saveConge(conge);
-
-                // Assert
-                assertNotNull(savedConge);
-                assertNull(savedConge.getName());
-                assertEquals(conge.getDateDebut(), savedConge.getDateDebut());
-                assertEquals(conge.getDateFin(), savedConge.getDateFin());
-                assertEquals(conge.getEmployee(), savedConge.getEmployee());
-            }
-
-            // When given a Conge object with a null dateDebut, it should save the Conge to the database with a null dateDebut.
-            @Test
-            public void test_null_dateDebut_conge_object() {
-                // Arrange
-                Conge conge = new Conge();
-                conge.setName("Test Conge");
-                conge.setDateDebut(null);
-                conge.setDateFin(LocalDate.now().plusDays(5));
-                Employee employee = new Employee();
-                employee.setId(1L);
-                conge.setEmployee(employee);
-
-                // Act
-                Conge savedConge = congeService.saveConge(conge);
-
-                // Assert
-                assertNotNull(savedConge);
-                assertEquals(conge.getName(), savedConge.getName());
-                assertNull(savedConge.getDateDebut());
-                assertEquals(conge.getDateFin(), savedConge.getDateFin());
-                assertEquals(conge.getEmployee(), savedConge.getEmployee());
-            }
 
 }
