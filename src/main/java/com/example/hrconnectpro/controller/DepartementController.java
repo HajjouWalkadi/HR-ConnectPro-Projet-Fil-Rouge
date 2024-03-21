@@ -1,6 +1,7 @@
 package com.example.hrconnectpro.controller;
 
 import com.example.hrconnectpro.config.handlers.response.ResponseMessage;
+import com.example.hrconnectpro.entities.Conge;
 import com.example.hrconnectpro.entities.Departement;
 import com.example.hrconnectpro.service.DepartementService;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,17 @@ public class DepartementController {
             return ResponseMessage.badRequest("Departement not created");
         } else {
             return ResponseMessage.created(departement1, "Departement created successfully");
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteDepartement(@PathVariable Long id) {
+        Departement departement = departementService.getDepartementById(id);
+        if (departement == null) {
+            return ResponseEntity.badRequest().body("Failed to delete department: Department not found.");
+        } else {
+           departementService.deleteDepartement(id);
+            return ResponseEntity.ok().body("{\"message\":\"Department deleted successfully\"}");
         }
     }
 

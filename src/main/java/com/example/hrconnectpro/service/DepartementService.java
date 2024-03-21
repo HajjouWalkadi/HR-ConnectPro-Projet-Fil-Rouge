@@ -11,4 +11,5 @@ public interface DepartementService {
     List<Departement> getAllDepartements();
 
     Optional<Departement> findByNom(String nom);
+    void deleteDepartement(Long id);
 }

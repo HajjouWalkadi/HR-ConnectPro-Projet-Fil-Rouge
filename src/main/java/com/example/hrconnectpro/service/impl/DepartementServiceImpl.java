@@ -6,6 +6,7 @@ import com.example.hrconnectpro.repository.DepartementRepository;
 import com.example.hrconnectpro.service.DepartementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,15 +15,17 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DepartementServiceImpl implements DepartementService {
     private final DepartementRepository departementRepository;
+
     @Override
     public Departement getDepartementById(Long id) {
-        return departementRepository.findById(id).orElseThrow();
+        return departementRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Departement not found with id " + id));
     }
 
     @Override
     public Departement addDepartement(Departement departement) {
-        Departement byNom = departementRepository.findByNom(departement.getNom()).orElse(null);
-        if (byNom != null) {
+        Optional<Departement> byNom = departementRepository.findByNom(departement.getNom());
+        if (byNom.isPresent()) {
             throw new ResourceNotFoundException("Departement name " + departement.getNom() + " already exists");
         }
         return departementRepository.save(departement);
@@ -36,5 +39,10 @@ public class DepartementServiceImpl implements DepartementService {
     @Override
     public Optional<Departement> findByNom(String nom) {
         return departementRepository.findByNom(nom);
+    }
+
+    @Override
+    public void deleteDepartement(Long id) {
+        departementRepository.deleteById(id);
     }
 }
