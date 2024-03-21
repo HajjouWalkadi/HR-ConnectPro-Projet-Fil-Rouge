@@ -9,6 +9,7 @@ import com.example.hrconnectpro.service.CongeService;
 import com.example.hrconnectpro.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -57,6 +58,7 @@ private final EmployeeService employeeService;
         return congeRepository.findCongeByEmployeeId(id);
     }
 
+    @Transactional
     @Override
     public void deleteConge(Long id) {
         findCongeById(id);

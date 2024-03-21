@@ -72,15 +72,37 @@ public class CongeController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity deleteConge(Long id) {
-        Conge conge = congeService.findCongeById(id);
-        if (conge == null) {
-            return ResponseMessage.badRequest("Failed to delete congé.");
-        }else {
-            return ResponseMessage.created(conge,"Congé deleted successfully");
-        }
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity deleteConge(@PathVariable Long id) {
+//        Conge conge = congeService.findCongeById(id);
+//        if (conge == null) {
+//            return ResponseMessage.badRequest("Failed to delete congé.");
+//        }else {
+//            return ResponseMessage.created(conge,"Congé deleted successfully");
+//        }
+//    }
+
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<?> deleteConge(@PathVariable Long id) {
+//        Conge conge = congeService.findCongeById(id);
+//        if (conge == null) {
+//            return ResponseEntity.badRequest().body("Failed to delete congé: Congé not found.");
+//        } else {
+//            congeService.deleteConge(id);
+//            return ResponseEntity.ok().body("Congé deleted successfully");
+//        }
+//    }
+@DeleteMapping("/{id}")
+public ResponseEntity<?> deleteConge(@PathVariable Long id) {
+    Conge conge = congeService.findCongeById(id);
+    if (conge == null) {
+        return ResponseEntity.badRequest().body("Failed to delete congé: Congé not found.");
+    } else {
+        congeService.deleteConge(id);
+        return ResponseEntity.ok().body("{\"message\":\"Congé deleted successfully\"}");
     }
+}
+
     @PutMapping("/change-status/{id}")
     public ResponseEntity changeStatus(@PathVariable Long id, @RequestParam StatusConge status) {
         Conge conge = congeService.updateStatus(id, status);
