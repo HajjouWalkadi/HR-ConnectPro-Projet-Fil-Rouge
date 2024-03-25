@@ -3,6 +3,7 @@ package com.example.hrconnectpro.controller;
 import com.example.hrconnectpro.config.handlers.response.ResponseMessage;
 import com.example.hrconnectpro.entities.Conge;
 import com.example.hrconnectpro.entities.Departement;
+import com.example.hrconnectpro.repository.DepartementRepository;
 import com.example.hrconnectpro.service.DepartementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DepartementController {
     private final DepartementService departementService;
+    private final DepartementRepository departementRepository;
 
     @GetMapping
     public ResponseEntity getAllDepartements() {
@@ -52,6 +54,18 @@ public class DepartementController {
             return ResponseEntity.ok().body("{\"message\":\"Department deleted successfully\"}");
         }
     }
+
+    @GetMapping("/count")
+    public ResponseEntity<?> getDepartementsCount() {
+        Long count = departementService.getDepartementsCount();
+        if (count == null) {
+            return ResponseEntity.badRequest().body("Failed to get department Count.");
+        } else {
+            return ResponseEntity.ok().body(count);
+        }
+    }
+
+
 
 
 

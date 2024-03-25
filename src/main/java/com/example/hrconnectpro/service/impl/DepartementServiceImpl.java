@@ -45,4 +45,9 @@ public class DepartementServiceImpl implements DepartementService {
     public void deleteDepartement(Long id) {
         departementRepository.deleteById(id);
     }
+
+    @Override
+    public Long getDepartementsCount() {
+        return departementRepository.count();
+    }
 }

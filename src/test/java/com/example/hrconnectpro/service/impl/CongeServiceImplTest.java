@@ -21,7 +21,7 @@ class CongeServiceImplTest {
     private CongeRepository congeRepository;
 
     @Mock
-    private EmployeeService employeeService; // Mock the EmployeeService
+    private EmployeeService employeeService;
 
     @InjectMocks
     private CongeServiceImpl congeService;

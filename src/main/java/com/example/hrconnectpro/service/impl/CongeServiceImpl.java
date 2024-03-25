@@ -53,6 +53,7 @@ private final EmployeeService employeeService;
     public Conge findCongeById(Long id) {
         return congeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Conge id " + id + "not found"));
     }
+
     @Override
     public Conge findCongeByEmployeeId(Long id) {
         return congeRepository.findCongeByEmployeeId(id);
